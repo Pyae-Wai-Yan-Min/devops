@@ -24,5 +24,7 @@ jobs:
         run: docker build -t se_methods .
       - name: Run image
         run: docker run --network se-methods --name devopscontainer se_methods
+      - name: Run docker compose
+        run: docker compose up --abort-on-container-exit
       - name: view logs
         run: docker logs devopscontainer
