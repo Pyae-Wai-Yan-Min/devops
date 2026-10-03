@@ -1,22 +1,20 @@
 
 services:
-  app:
-    build: .
-    depends_on:
-      db:
-        condition: service_healthy
-    restart: on-failure
-
   db:
+    image: mysql_db
+    container_name: mysql_db
     build: db/.
     restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_db
+      MYSQL_ROOT_HOST: '%'
     ports:
       - "33060:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: example  # ensure this matches your App.java credentials
 
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
+  app:
+    image: mysql_app
+    container_name: mysql_app
+    build: .
+    depends_on:
+      - db
