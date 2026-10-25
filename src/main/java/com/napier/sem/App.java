@@ -4,9 +4,7 @@ import java.sql.*;
 
 public class App
 {
-    /**
-     * Connection to MySQL database.
-     */
+    // Connection to MySQL database.
     private Connection con = null;
 
     /**
@@ -34,7 +32,7 @@ public class App
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?allowPublicKeyRetrieval=true&useSSL=false", "root", "root");
                 System.out.println("Successfully connected");
                 break;
             }
@@ -67,5 +65,17 @@ public class App
                 System.out.println("Error closing connection to database");
             }
         }
+    }
+
+    public static void main(String[] args)
+    {
+        // Create new Application
+        App a = new App();
+
+        // Connect to database
+        a.connect();
+
+        // Disconnect from database
+        a.disconnect();
     }
 }
