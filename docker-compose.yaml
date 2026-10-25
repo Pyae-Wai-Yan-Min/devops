@@ -12,7 +12,7 @@ services:
     ports:
       - "33060:3306"
 
-  app:
+  main:
     image: mysql_app
     container_name: mysql_app
     build: .
