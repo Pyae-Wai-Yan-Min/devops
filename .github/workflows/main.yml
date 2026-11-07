@@ -16,7 +16,7 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
       - name: Unit Tests
-        run: mvn -Dtest=com.napier.devops.AppTest test
+        run: mvn -Dtest=com.napier.sem.AppTest test
       - name: Package and Run docker compose
         run: |
           mvn package -DskipTests
