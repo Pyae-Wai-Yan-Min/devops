@@ -46,6 +46,28 @@ jobs:
           flags: Integration Tests # optional
           verbose: true # optional (default = false)
 
+  CodeCov:
+    name: Workflow for Codecov java-maven
+    on: [ push, pull_request ]
+    jobs:
+      run:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v5
+          - name: Set up JDK 25
+            uses: actions/setup-java@v5
+            with:
+              java-version: 25
+          - name: Install dependencies
+            run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+          - name: Run tests and collect coverage
+            run: mvn -B test
+          - name: Upload coverage to Codecov
+            uses: codecov/codecov-action@v5
+            env:
+              CODECOV_TOKEN: ${{ secrets.CODECOV_ORG_TOKEN }}
+
   build:
     name: Build and Start Using docker-compose
     runs-on: ubuntu-22.04
